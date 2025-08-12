@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row row-cols-xl-3 row-cols-lg-2 row-cols-1">
+            <div class="col" *ngFor="let data of msApp.profiles" id="c_{{data.id}}">
+                <div class="card">
+                    <div class="card-body" >
+                        <div class="d-flex mb-1 align-items-top">
+                            <div class="flex-shrink-0">
+                                <div class="avatar-md img-thumbnail rounded-circle flex-shrink-0">
+                                    <img [src]="msApp.imgSrc(data)" alt="" class="rounded-circle img-fluid" >
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-4">
+                                <h5 class="card-title mb-1">{{data.name}}</h5>
+                                <p class="text-muted mb-0">Luiz D'more</p>
+                                <td>{{msApp.countProfile(data.name).toString()}}</td>
+                                <app-avatar-list [profileName]="data.name"></app-avatar-list>
+                            </div>
+                            <div class="col text-end dropdown" ngbDropdown>
+                                <a href="javascript:void(0);" class="arrow-none" id="dropdownMenuLink" 
+                                    aria-expanded="true" ngbDropdownToggle>
+                                    <i class="ri-more-fill fs-17"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end"
+                                    aria-labelledby="dropdownMenuLink" ngbDropdownMenu>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);" 
+                                            (click)="msApp.edit(msApp.modal, data.id)">
+                                            <i class="ri-pencil-line me-2 align-bottom text-muted"></i>Edit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);"
+                                            (click)="msApp.deleteItem(msApp.modalDelete,data.id)">
+                                            <i class="ri-delete-bin-5-line me-2 align-middle"></i>Delete
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12 d-flex">
+        <div>
+            <pagination
+                [boundaryLinks]="true"
+                [directionLinks]="false"
+                [totalItems]    ="msApp.pagination.totalCount!"
+                [itemsPerPage]  ="msApp.pagination.pageSize!"
+                [maxSize]="10"
+                [(ngModel)]="msApp.pagination.currentPage"
+                (pageChanged)="msApp.pageChanged($event)"
+                pageBtnClass="btn"
+                previousText="&laquo;"
+                nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;" >
+            </pagination>
+        </div>
+        <div class="mt-2 ms-2">
+            {{msApp.showingEntries()}}
+        </div>
+    </div>
+</div>
+

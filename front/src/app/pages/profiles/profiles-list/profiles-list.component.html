@@ -1,0 +1,141 @@
+<div class="row">
+
+    <div class="col-xxl-9">
+        <div class="card mb-2">
+            <div class="card-body">
+                <div class="table-responsive table-card m-1">
+                    <table class="table">
+                        <thead>
+                            <tr class="bg-light">
+                                <th scope="col" style="width: 50px;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="checkAll" value="option"
+                                            [(ngModel)]="msApp.masterSelected" (change)="msApp.checkUncheckAll($event)">
+                                    </div>
+                                </th>
+                                <th class="sort" (click)="msApp.orderByColumn('p.name')">Profile</th>
+                                <th class="sort" (click)="msApp.orderByColumn('')">Users</th>
+                                <th class="sort" (click)="msApp.orderByColumn('')">Users Count</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody style="vertical-align: middle">
+                            <tr *ngFor="let data of msApp.profiles" id="c_{{data.id}}">
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="checkAll"
+                                            value="{{data.id}}" (change)="msApp.onCheckboxChange($event)">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-sm img-thumbnail rounded-circle flex-shrink-0">
+                                                    <img [src]="msApp.imgSrc(data)" alt=""
+                                                        class="rounded-circle img-fluid">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-2 name">
+                                                <ngb-highlight [result]="data.name" [term]="msApp.term"></ngb-highlight>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- Component Avatar List -->
+                                <td>
+                                    <app-avatar-list [profileName]="data.name"></app-avatar-list>
+                                </td>
+                                <td>
+                                    <ngb-highlight [result]=msApp.countProfile(data.name).toString()
+                                        [term]="msApp.term"></ngb-highlight>
+                                </td>
+                                <td>
+                                    <ul class="list-inline hstack gap-2 mb-0">
+                                        <li class="list-inline-item" ngbTooltip="Resume" placement="top">
+                                            <a href="javascript:void(0);" (click)="msApp.getById(data.id)">
+                                                <i class="ri-eye-fill align-bottom text-muted"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item" ngbTooltip="Edit" placement="top">
+                                            <a class="edit-item-btn" data-bs-toggle="modal"
+                                                (click)="msApp.getById(data.id)"
+                                                (click)="msApp.edit(msApp.modal, data.id)">
+                                                <i class="ri-pencil-fill align-bottom text-muted"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item me-0" ngbTooltip="Delete" placement="top">
+                                            <a class="remove-item-btn" data-bs-toggle="modal"
+                                                (click)="msApp.deleteItem(msApp.modalDelete,data.id)">
+                                                <i class="ri-delete-bin-fill align-bottom text-muted"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-12 d-flex">
+                <div>
+                    <pagination [boundaryLinks]="true" [directionLinks]="false"
+                        [totalItems]="msApp.pagination.totalCount!" [itemsPerPage]="msApp.pagination.pageSize!"
+                        [maxSize]="10" [(ngModel)]="msApp.pagination.currentPage"
+                        (pageChanged)="msApp.pageChanged($event)" pageBtnClass="btn" previousText="&laquo;"
+                        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                    </pagination>
+                </div>
+                <div class="mt-2 ms-2">
+                    {{msApp.showingEntries()}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xxl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center user-details mb-4">
+                    <div class="position-relative d-inline-block">
+                        <div class="flex-shrink-0">
+                            <div class="avatar-lg img-thumbnail rounded-circle flex-shrink-0">
+                                <img [src]="msApp.imgSrc(msApp.profileView)" alt="" class="rounded-circle img-fluid">
+                            </div>
+                        </div>
+                        <span class="user-active position-absolute rounded-circle bg-success"></span><span
+                            class="visually-hidden"></span>
+                    </div>
+                    <div class="team-content mt-3">
+                        <h5 class="card-title mb-1">{{msApp.profileView.name}} </h5>
+                        <p class="text-muted mb-0">{{msApp.profileView.account?.company}}</p>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="text-muted text-uppercase fw-semibold mb-4">Profile</h6>
+                    <div class="table-responsive table-card">
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-medium" scope="row" width="100">Name</td>
+                                    <td>{{msApp.profileView.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium" scope="row">Created By</td>
+                                    <td>Luiz Damore</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium" scope="row">Users Count</td>
+                                    <td>{{msApp.countProfile(msApp.profileView.name).toString()}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

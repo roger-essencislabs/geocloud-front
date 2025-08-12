@@ -1,0 +1,179 @@
+<div class="row">
+    
+    <div class="col-xxl-9">
+        <div class="card mb-2">
+            <div class="card-body">
+                <div class="table-responsive table-card m-1">
+                    <table class="table">
+                        <thead>
+                            <tr class="bg-light">
+                                <th scope="col" style="width: 50px;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="checkAll" value="option"
+                                        [(ngModel)]="msApp.masterSelected" (change)="msApp.checkUncheckAll($event)">
+                                    </div>
+                                </th>
+                                <th class="sort" (click)="msApp.orderByColumn('u.firstName')">First Name</th>
+                                <th class="sort" (click)="msApp.orderByColumn('u.lastName')">Last Name</th>
+                                <th class="sort" (click)="msApp.orderByColumn('a.company')">Company</th>
+                                <th class="sort" (click)="msApp.orderByColumn('p.name')">Profile</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody style="vertical-align: middle">
+                            <tr *ngFor="let data of msApp.users" id="c_{{data.id}}">
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="checkAll"
+                                            value="{{data.id}}" (change)="msApp.onCheckboxChange($event)">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-sm img-thumbnail rounded-circle flex-shrink-0">
+                                                    <img [src]="msApp.imgUserProfileSrc(data)" alt="" class="rounded-circle img-fluid" >
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-2 name">
+                                                <ngb-highlight [result]="data.firstName" [term]="msApp.term"></ngb-highlight>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <ngb-highlight [result]="data.lastName" [term]="msApp.term"></ngb-highlight>
+                                </td>
+                                <td>
+                                    <ngb-highlight [result]="data.profile?.account?.company" [term]="msApp.term"></ngb-highlight>
+                                </td>
+                                <td>
+                                    <ngb-highlight [result]="data.profile?.name" [term]="msApp.term"></ngb-highlight>
+                                </td>
+                                <td>
+                                    <ul class="list-inline hstack gap-2 mb-0">
+                                        <li class="list-inline-item" ngbTooltip="Resume" placement="top">
+                                            <a href="javascript:void(0);"
+                                                (click)="msApp.getById(data.id)">
+                                                <i class="ri-eye-fill align-bottom text-muted"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item" ngbTooltip="Edit" placement="top">
+                                            <a class="edit-item-btn" data-bs-toggle="modal"
+                                                (click)="msApp.getById(data.id)"
+                                                (click)="msApp.edit(msApp.modal, data.id)" >
+                                                <i class="ri-pencil-fill align-bottom text-muted"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item me-0" ngbTooltip="Delete" placement="top">
+                                            <a class="remove-item-btn" data-bs-toggle="modal" 
+                                                 (click)="msApp.deleteItem(msApp.modalDelete,data.id)">
+                                                <i class="ri-delete-bin-fill align-bottom text-muted"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-12 d-flex">
+                <div>
+                    <pagination
+                        [boundaryLinks]="true"
+                        [directionLinks]="false"
+                        [totalItems]    ="msApp.pagination.totalCount!"
+                        [itemsPerPage]  ="msApp.pagination.pageSize!"
+                        [maxSize]="10"
+                        [(ngModel)]="msApp.pagination.currentPage"
+                        (pageChanged)="msApp.pageChanged($event)"
+                        pageBtnClass="btn"
+                        previousText="&laquo;"
+                        nextText="&rsaquo;"
+                        firstText="&laquo;"
+                        lastText="&raquo;" >
+                    </pagination>
+                </div>
+                <div class="mt-2 ms-2">
+                    {{msApp.showingEntries()}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xxl-3">
+        <div class="col-lg-12">
+            <div class="team-list grid-view-filter row g-0">
+                <div class="card team-box">
+                    <div class="team-cover">
+                        <img [src]="msApp.imgUserCoverSrc(msApp.userView)" alt="" class="img-fluid" />
+                    </div>
+                    <div class="card-body mt-3">
+                        <div class="row align-items-center team-row">
+                            <div class="col-lg-4 col mt-4">
+                                <div class="team-profile-img mb-3">
+                                    <div class="avatar-lg img-thumbnail rounded-circle flex-shrink-0">
+                                        <img [src]="msApp.imgUserProfileSrc(msApp.userView)"
+                                            class="rounded-circle img-fluid userprofile" alt="">
+                                    </div>
+                                    <div class="team-content mt-3">
+                                        <h5 class="card-title mb-1">{{msApp.userView.firstName}} {{msApp.userView.lastName}}</h5>
+                                        <p class="text-muted mb-0">{{msApp.userView.profile?.account?.name}}</p>
+                                        <p class="text-muted mb-0">{{msApp.userView.profile?.name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="text-muted text-uppercase fw-semibold mb-4">User</h6>
+                            <div class="table-responsive table-card">
+                                <table class="table table-sm table-borderless">
+                                    <tbody>  
+                                        <tr>
+                                            <td class="fw-medium" scope="row" width="100">First Name</td>
+                                            <td>{{msApp.userView.firstName}}</td>
+                                        </tr>
+                                        <tr height="20px">
+                                            <td class="fw-medium" scope="row">Last Name</td>
+                                            <td>{{msApp.userView.lastName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium" scope="row">Phone</td>
+                                            <td>{{msApp.userView.phone}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium" scope="row">Email</td>
+                                            <td>{{msApp.userView.email}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium" scope="row">Country</td>
+                                            <td>{{msApp.userView.country?.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium" scope="row">State</td>
+                                            <td>{{msApp.userView.state}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium" scope="row">City</td>
+                                            <td>{{msApp.userView.city}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium" scope="row">Register</td>
+                                            <td>{{msApp.showDate(msApp.userView.register!)}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

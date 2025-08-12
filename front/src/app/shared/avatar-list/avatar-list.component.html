@@ -1,0 +1,19 @@
+<div class="col-auto ms-sm-auto">
+    <div class="avatar-group" id="newMembar">
+        <ng-container *ngFor="let profileAvatar of msApp.profileAvatarList">
+            <ng-container *ngIf="profileAvatar.profile == profileName">
+                <a href="javascript: void(0);" class="avatar-group-item" [ngbTooltip]="profileAvatar.name"
+                    placement="top">
+                    <img [src]="profileAvatar.imgType" alt="" class="rounded-circle avatar-xs">
+                </a>
+            </ng-container>
+        </ng-container>
+        <a data-bs-toggle="modal" class="avatar-group-item">
+            <div class="avatar-xs">
+                <div class="avatar-title rounded-circle">
+                    +
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

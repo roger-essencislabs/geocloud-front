@@ -1,0 +1,35 @@
+{
+  "MENUITEMS": {
+    "SETTINGS": {
+      "TEXT": "Settings",
+      "LIST": {
+        "USERS": "Users",
+        "PROFILES": "Profiles"
+      }
+    },
+    "MENU1": {
+      "TEXT": "Menu 1",
+      "LIST": {
+        "ITEM1": {
+          "TEXT": "Item 1",
+          "LIST": {
+            "SUBITEM11": "Sub Item 11",
+            "SUBITEM12": "Sub Item 12"
+          }
+        }
+      }
+    },
+    "MENUADM": {
+      "TEXT": "Menu Adm",
+      "LIST": {
+        "ITEMADM1": {
+          "TEXT": "Item Adm 1",
+          "LIST": {
+            "SUBITEMADM1": "Sub Item Adm 1",
+            "SUBITEMADM2": "Sub Item  Adm 2"
+          }
+        }
+      }
+    }
+  }
+}

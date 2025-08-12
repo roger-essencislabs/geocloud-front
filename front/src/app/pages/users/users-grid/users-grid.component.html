@@ -1,0 +1,97 @@
+<div class="row g-2">
+    <div class="col-lg-12">
+        <div class="team-list grid-view-filter row">
+            <div class="col" *ngFor="let data of msApp.users" id="c_{{data.id}}">
+                <div class="card team-box">
+                    <div class="team-cover">
+                        <img [src]="msApp.imgUserCoverSrc(data)" alt="" class="img-fluid" />
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row align-items-center team-row">
+                            <div class="col team-settings">
+                                <div class="row">
+                                    <div class="col"></div>
+                                    <div class="col text-end dropdown" ngbDropdown>
+                                        <a href="javascript:void(0);" class="arrow-none" id="dropdownMenuLink"
+                                            aria-expanded="true" ngbDropdownToggle>
+                                            <i class="ri-more-fill fs-17"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end"
+                                            aria-labelledby="dropdownMenuLink" ngbDropdownMenu>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                    (click)="msApp.edit(msApp.modal, data.id)">
+                                                    <i class="ri-pencil-line me-2 align-bottom text-muted"></i>Edit
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                    (click)="msApp.deleteItem(msApp.modalDelete,data.id)">
+                                                    <i class="ri-delete-bin-5-line me-2 align-middle"></i>Delete
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col">
+                                <div class="team-profile-img">
+                                    <div class="avatar-lg img-thumbnail rounded-circle flex-shrink-0">
+                                        <img [src]="image$ | async" alt="" class="rounded-circle img-fluid" >
+                                    </div>
+                                    <div class="team-content">
+                                        <h5 class="card-title mb-1">{{data.firstName}} {{data.lastName}}</h5>
+                                        <p class="text-muted mb-0">{{data.profile?.account?.name}}</p>
+                                        <p class="text-muted mb-0">{{data.profile?.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="d-flex mb-2">
+                                        <div class="flex-grow-1">
+                                            <div>Tasks</div>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <div><i class="ri-list-check align-bottom me-1 text-muted"></i>20/40</div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-sm animated-progess">
+                                        <ngb-progressbar [value]="50" type="success"
+                                            class="progress-sm">
+                                        </ngb-progressbar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12 d-flex">
+        <div>
+            <pagination
+                [boundaryLinks]="true"
+                [directionLinks]="false"
+                [totalItems]    ="msApp.pagination.totalCount!"
+                [itemsPerPage]  ="msApp.pagination.pageSize!"
+                [maxSize]="10"
+                [(ngModel)]="msApp.pagination.currentPage"
+                (pageChanged)="msApp.pageChanged($event)"
+                pageBtnClass="btn"
+                previousText="&laquo;"
+                nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;" >
+            </pagination>
+        </div>
+        <div class="mt-2 ms-2">
+            {{msApp.showingEntries()}}
+        </div>
+    </div>
+</div>
+
+
+

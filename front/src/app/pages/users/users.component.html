@@ -1,0 +1,245 @@
+<app-breadcrumbs title="Users" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="search-box">
+                            <input type="text" name="searchTerm" class="form-control"
+                                placeholder="Search ..." (input)="filterUsers($event.target)"
+                                [(ngModel)]="term">
+                            <i class="ri-search-line search-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="text-muted text-nowrap">Sort by: </span>
+                            <select class="form-control mb-0" data-choices data-choices-search-false [(ngModel)]="sortField"
+                                id="choices-single-default" (click)="orderByChange();">
+                                <option value="u.id">-----</option>
+                                <option value="u.firstName">First Name</option>
+                                <option value="u.lastName">Last Name</option>
+                                <option value="a.company">Company</option>
+                                <option value="p.name">Profile</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto ms-auto">
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="btn btn-soft-danger" id="remove-actions" style="display: none"
+                                (click)="deleteMultiple(modalDelete)"> 
+                               <i class="ri-delete-bin-2-line"></i>
+                            </button>
+                            <div class="list-grid-nav hstack gap-2" ngbDropdown>
+                                <ul ngbNav #userNav="ngbNav" [activeId]="viewType" class="d-flex gap-1">
+                                    <li [ngbNavItem]="1">
+                                        <a ngbNavLink id="list-view-button" class="btn btn-soft-info nav-link  btn-icon fs-14 filter-button"
+                                            (click)="userNav.select(1)">
+                                            <i class="ri-list-unordered"></i>
+                                        </a>
+                                        <ng-template ngbNavContent>
+                                            <div class="users-list grid-view-filter row">
+                                                <app-users-list></app-users-list>
+                                            </div>
+                                        </ng-template>
+                                    </li>
+                                    <li [ngbNavItem]="2">
+                                        <a ngbNavLink id="grid-view-button" class="btn btn-soft-info nav-link btn-icon fs-14 filter-button"
+                                            (click)="userNav.select(2)">
+                                            <i class="ri-grid-fill"></i> 
+                                        </a>
+                                        <ng-template ngbNavContent>
+                                            <div class="users-list grid-view-filter row">
+                                                <app-users-grid></app-users-grid>
+                                            </div>
+                                        </ng-template>
+                                    </li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-info" id="add-btn" 
+                                (click)="add(modal)">
+                                <i class="ri-add-fill me-1 align-bottom"></i> User
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<div class="row">
+    <div [ngbNavOutlet]="userNav"></div>
+</div>
+
+<!-- MODAL ADD / EDIT -->
+
+<ng-template #modal role="document" let-modal>
+    <form [formGroup]="userForm">
+        <div class="modal-body">
+            <div class="px-1 pt-1">
+                <div class="modal-team-cover position-relative mb-0 mt-n4 mx-n4 rounded-top overflow-hidden">
+                    <img src="/assets/images/system/cover.jpg" id="cover-img" alt="" class="img-fluid">
+                    <div class="d-flex position-absolute start-0 end-0 top-0 p-3">
+                        <div class="flex-grow-1">
+                            <h5 class="modal-title text-white" id="modalTitle">Add User</h5>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <div class="d-flex gap-3 align-items-center">
+                                <div>
+                                    <label for="cover-image-input" class="mb-0" data-bs-toggle="tooltip" 
+                                            data-bs-placement="top" title="Select Cover Image">
+                                        <div class="avatar-xs">
+                                            <div class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                                <i class="ri-image-fill"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <input class="form-control d-none" value="" id="cover-image-input" type="file"
+                                           accept="image/png, image/gif, image/jpeg"
+                                           (change)="fileChangeCover($event)">
+                                </div>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mb-2 mt-n5 pt-2">
+                <div class="position-relative d-inline-block">
+                    <div class="position-absolute bottom-0 end-0">
+                        <label for="profile-image-input" class="mb-0" data-bs-toggle="tooltip"
+                            data-bs-placement="right" title="Select Profile Image">
+                            <div class="avatar-xs">
+                                <div class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                    <i class="ri-image-fill"></i>
+                                </div>
+                            </div>
+                        </label>
+                        <input class="form-control d-none" value="" id="profile-image-input" type="file" 
+                                           accept="image/png, image/gif, image/jpeg"
+                                           (change)="fileChangeProfile($event)">
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div class="avatar-lg img-thumbnail rounded-circle flex-shrink-0">
+                            <img id="profile-img" src="" alt="" class="rounded-circle img-fluid" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <label for="profileId" class="form-label">Profile</label>
+                    <select class="form-control" id="profileId" 
+                        formControlName="profileId" [ngClass]="{ 'is-invalid': f.profileId.errors && f.profileId.touched}">
+                        <option value="">Select profile</option>
+                        <option [ngValue]="profile.id" *ngFor="let profile of profiles">{{profile.name}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="f.profileId.errors?.required">required field</div>
+                </div>
+            </div>
+            <div class="row g-3 mt-3">
+                <div class="col-6">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="Enter first name"
+                        formControlName="firstName" [ngClass]="{ 'is-invalid': f.firstName.errors && f.firstName.touched}">
+                    <div class="invalid-feedback" *ngIf="f.firstName.errors?.required">required field</div>
+                    <div class="invalid-feedback" *ngIf="f.firstName.errors?.minlength">minimum of 4 characters</div>
+                    <div class="invalid-feedback" *ngIf="f.firstName.errors?.maxlength">maximum 40 characters</div>
+                </div>
+                <div class="col-6">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Enter last name" 
+                        formControlName="lastName" [ngClass]="{ 'is-invalid': f.lastName.errors && f.lastName.touched}">
+                    <div class="invalid-feedback" *ngIf="f.lastName.errors?.required">required field</div>
+                    <div class="invalid-feedback" *ngIf="f.lastName.errors?.minlength">minimum of 4 characters</div>
+                    <div class="invalid-feedback" *ngIf="f.lastName.errors?.maxlength">maximum 40 characters</div>
+                </div>
+                <div class="col-6">
+                    <label for="phone" class="form-label">Phone<span class="text-muted">(Optional)</span></label>
+                    <input type="text" class="form-control" id="phone" placeholder="Enter phone" 
+                        formControlName="phone" [ngClass]="{ 'is-invalid': f.phone.errors && f.phone.touched}">
+                    <div class="invalid-feedback" *ngIf="f.phone.errors?.maxlength">maximum 40 characters</div>
+                </div>
+                <div class="col-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" 
+                        formControlName="email" [ngClass]="{ 'is-invalid': f.email.errors && f.email.touched}">
+                    <div class="invalid-feedback" *ngIf="f.email.errors?.required">required field</div>
+                    <div class="invalid-feedback" *ngIf="f.email.errors?.maxlength">maximum 60 characters</div>
+                    <div class="invalid-feedback" *ngIf="f.email.errors?.email">must be a valid email address</div>
+                </div>
+            </div>
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <label for="countryId" class="form-label">Country</label>
+                    <select class="form-control" id="countryId" 
+                        formControlName="countryId" [ngClass]="{ 'is-invalid': f.countryId.errors && f.countryId.touched}">
+                        <option value="">Select country</option>
+                        <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="f.countryId.errors?.required">required field</div>
+                </div>
+                <div class="col-6">
+                    <label for="state" class="form-label">State</label>
+                    <input type="text" class="form-control" id="state" placeholder="Enter state" 
+                        formControlName="state" [ngClass]="{ 'is-invalid': f.state.errors && f.state.touched}">
+                    <div class="invalid-feedback" *ngIf="f.state.errors?.required">required field</div>
+                    <div class="invalid-feedback" *ngIf="f.state.errors?.minlength">minimum of 2 characters</div>
+                    <div class="invalid-feedback" *ngIf="f.state.errors?.maxlength">maximum 40 characters</div>
+                </div>
+                <div class="col-6">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" placeholder="Enter city" 
+                        formControlName="city" [ngClass]="{ 'is-invalid': f.city.errors && f.city.touched}">
+                    <div class="invalid-feedback" *ngIf="f.city.errors?.required">required field</div>
+                    <div class="invalid-feedback" *ngIf="f.city.errors?.minlength">minimum of 4 characters</div>
+                    <div class="invalid-feedback" *ngIf="f.city.errors?.maxlength">maximum 40 characters</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                    (click)="modal.close('Close click')">Close</button>
+                <button class="btn btn-success" id="save-btn" 
+                    [disabled]="!userForm.valid"(click)="save()">Save</button>
+            </div>
+        </div>
+    </form>  
+</ng-template>
+
+<!-- MODAL DELETE -->
+
+<ng-template #modalDelete let-modal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="deleteRecord-close"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mt-2 text-center">
+               <img src="assets/images/trash.png" trigger="loop"
+                    colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px">
+                <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                    <h4>You are about to delete a User ?</h4>
+                    <p class="text-muted mx-4 mb-0">Deleting your User will remove all of your information from our
+                        database.</p>
+                </div>
+            </div>
+            <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
+                    id="deleteRecord-close" (click)="modal.close('Close click')"><i
+                        class="ri-close-line me-1 align-middle"></i> Close</button>
+                <button type="button" class="btn w-sm btn-danger " id="delete-product" (click)="delete()"
+                    (click)="modal.close('Close click')">Yes, Delete It!</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
