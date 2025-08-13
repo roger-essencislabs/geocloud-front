@@ -19,6 +19,18 @@
         }
       }
     },
+    "LIMS": {
+      "TEXT": "LIMS",
+      "LIST": {
+        "ITEM1": {
+          "TEXT": "Item 1 LIMS",
+          "LIST": {
+            "SUBITEM11": "Sub Item 11 LIMS",
+            "SUBITEM12": "Sub Item 12 LIMS"
+          }
+        }
+      }
+    },
     "MENUADM": {
       "TEXT": "Menu Adm",
       "LIST": {

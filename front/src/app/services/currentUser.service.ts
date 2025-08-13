@@ -72,12 +72,12 @@ export class CurrentUserService {
         subItems: [
           {
             id: 1010,
-            label: 'Users',
+            label: 'MENUITEMS.SETTINGS.LIST.USERS',
             link: '/users',
           },
           {
             id: 1020,
-            label: 'Profiles',
+            label: 'MENUITEMS.SETTINGS.LIST.PROFILES',
             link: '/profiles',
           },
         ]
@@ -90,17 +90,17 @@ export class CurrentUserService {
         subItems: [
           {
             id: 2010,
-            label: 'Item 1',
+            label: 'MENUITEMS.MENU1.LIST.ITEM1.TEXT',
             subItems: [
               {
                 id: 2011,
-                label: 'Sub Item 11',
+                label: 'MENUITEMS.MENU1.LIST.ITEM1.LIST.SUBITEM11',
                 // link: '/pages/1',
                 parentId: 2010
               },
               {
                 id: 2012,
-                label: 'Sub Item 12',
+                label: 'MENUITEMS.MENU1.LIST.ITEM1.LIST.SUBITEM12',
                 // link: '/pages/2',
                 parentId: 2010
               },
@@ -108,7 +108,32 @@ export class CurrentUserService {
           },
         ]
       },
-      
+      {
+          id: 4000,
+          label: 'MENUITEMS.LIMS.TEXT',
+          collapseid: 'Menu LIMS',
+          icon: 'ri-flask-fill', // Icone de Backer.
+          subItems: [
+            {
+              id: 4010,
+              label: 'MENUITEMS.LIMS.LIST.ITEM1.TEXT',
+              subItems: [
+                {
+                  id: 4011,
+                  label: 'MENUITEMS.LIMS.LIST.ITEM1.LIST.SUBITEM11',
+                  // link: '/pages/5',
+                  parentId: 4010
+                },
+                {
+                  id: 4012,
+                  label: 'MENUITEMS.LIMS.LIST.ITEM1.LIST.SUBITEM12',
+                  // link: '/pages/6',
+                  parentId: 4010
+                },
+              ]
+            },
+          ]
+        }
     ];
 
     if (user.profile?.account?.id == 1){
@@ -121,17 +146,18 @@ export class CurrentUserService {
           subItems: [
             {
               id: 3010,
-              label: 'Item Adm 1',
+              label: 'MENUITEMS.MENUADM.LIST.ITEMADM1.TEXT',
               subItems: [
                 {
                   id: 3011,
-                  label: 'Sub Item Adm 1',
+                  label: 'MENUITEMS.MENUADM.LIST.ITEMADM1.LIST.SUBITEMADM1',
                   // link: '/pages/5',
                   parentId: 3010
                 },
                 {
                   id: 3012,
-                  label: 'Sub Item  Adm 2',
+                  label: 'MENUITEMS.MENUADM.LIST.ITEMADM1.LIST.SUBITEMADM2',
+                  // link: '/pages/5',
                   // link: '/pages/6',
                   parentId: 3010
                 },
