@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-        this.toastService.show('Email or password incorrect !', { classname: 'bg-danger text-white', delay: 5000 });
+        this.toastService.show(error, { classname: 'bg-danger text-white', delay: 5000 });
       }
     })
   }

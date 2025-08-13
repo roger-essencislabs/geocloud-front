@@ -14,11 +14,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
       [delay]="toast.delay || 5000"
       (hidden)="toastService.remove(toast)"
     >
-      <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
-        <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
-      </ng-template>
-
-      <ng-template #text>{{ toast.textOrTpl }}</ng-template>
+      {{ toast.textOrTpl }}
     </ngb-toast>
    }
   `,
@@ -31,5 +27,4 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 export class ToastsContainer {
   constructor(public toastService: ToastService) { }
 
-  isTemplate(toast: { textOrTpl: any; }) { return toast.textOrTpl instanceof TemplateRef; }
 }

@@ -4,6 +4,7 @@ import { Observable, map, take } from 'rxjs';
 import { GlobalComponent } from '../global-component';
 import { User } from '../models/User';
 import { DatePipe } from '@angular/common';
+import { catchError } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class CurrentUserService {
@@ -11,16 +12,26 @@ export class CurrentUserService {
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   public login(email: string, password: string): Observable<void>{
-    return this.http.get<User>(`${GlobalComponent.baseUrl}User/login?email=${email}&password=${password}`).pipe(
-      take(1),
-      map((response: User) => {
-        const user = response;
-        if (user) {
+  return this.http.get<User>(`${GlobalComponent.baseUrl}User/login?email=${email}&password=${password}`).pipe(
+    take(1),
+    map((response: User) => {
+      this.setCurrentUser(response);
+         const user = response;
+         if (user) {
           this.setCurrentUser(user);
-        }
-      })
-    )
-  }
+         }
+    }),
+    catchError((error) => {
+      if (error == 'OK')
+        throw 'Invalid email or password';
+      else
+      {
+        console.error('Server unavailable or network error:', error);
+        throw 'Server unavailable or network error';
+      }
+    })
+  );
+}
 
   public setCurrentUser(user: User): void {
     console.log('setCurrentUser');
