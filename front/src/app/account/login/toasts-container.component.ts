@@ -30,6 +30,5 @@ export class ToastsContainer {
   constructor(public toastService: ToastService) { }
 
   isTemplate(toast: { textOrTpl: any; }) { 
-    console.log(toast);
     return toast.textOrTpl instanceof TemplateRef; }
 }
