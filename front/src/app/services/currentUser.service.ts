@@ -6,13 +6,22 @@ import { User } from '../models/User';
 import { DatePipe } from '@angular/common';
 import { catchError } from 'rxjs';
 
+// Login request interface
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+
 @Injectable({providedIn: 'root'})
 export class CurrentUserService {
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   public login(email: string, password: string): Observable<void>{
-  return this.http.get<User>(`${GlobalComponent.baseUrl}User/login?email=${email}&password=${password}`).pipe(
+    const body: LoginRequest = { email, password };
+
+  return this.http.post<User>(`${GlobalComponent.baseUrl}User/login`, body ).pipe(
     take(1),
     map((response: User) => {
       this.setCurrentUser(response);
@@ -22,7 +31,7 @@ export class CurrentUserService {
          }
     }),
     catchError((error) => {
-      if (error == 'OK')
+      if (error == 'No user found')
         throw 'Invalid email or password';
       else
       {
