@@ -36,7 +36,7 @@ export class CurrentUserService {
       else
       {
         console.error('Server unavailable or network error:', error);
-        throw 'Server unavailable or network error';
+        throw 'Server unavailable or network error [' + error + ']';
       }
     })
   );
@@ -85,75 +85,80 @@ export class CurrentUserService {
   public makeMenu(user: User){
     var mm = [
       {
-        id: 1000,
-        label: 'MENUITEMS.SETTINGS.TEXT',
-        collapseid: 'Settings',
-        icon: 'ri-reactjs-fill', //'ri-layout-grid-line'
-        subItems: [
-          {
-            id: 1010,
-            label: 'MENUITEMS.SETTINGS.LIST.USERS',
-            link: '/users',
-          },
-          {
-            id: 1020,
-            label: 'MENUITEMS.SETTINGS.LIST.PROFILES',
-            link: '/profiles',
-          },
-        ]
+      id: 1000,
+      label: 'MENUITEMS.SETTINGS.TEXT',
+      collapseid: 'Settings',
+      icon: 'ri-reactjs-fill',
+      subItems: [
+        {
+        id: 1010,
+        label: 'MENUITEMS.SETTINGS.LIST.USERS',
+        link: '/users',
+        },
+        {
+        id: 1020,
+        label: 'MENUITEMS.SETTINGS.LIST.PROFILES',
+        link: '/profiles',
+        },
+      ]
       },
       {
-        id: 2000,
-        label: 'MENUITEMS.MENU1.TEXT',
-        collapseid: 'Menu 1',
-        icon: 'ri-account-circle-line', //'ri-layout-grid-line'
+      id: 2000,
+      label: 'MENUITEMS.MENU1.TEXT',
+      collapseid: 'Menu 1',
+      icon: 'ri-account-circle-line',
+      subItems: [
+        {
+        id: 2010,
+        label: 'MENUITEMS.MENU1.LIST.ITEM1.TEXT',
         subItems: [
           {
-            id: 2010,
-            label: 'MENUITEMS.MENU1.LIST.ITEM1.TEXT',
-            subItems: [
-              {
-                id: 2011,
-                label: 'MENUITEMS.MENU1.LIST.ITEM1.LIST.SUBITEM11',
-                // link: '/pages/1',
-                parentId: 2010
-              },
-              {
-                id: 2012,
-                label: 'MENUITEMS.MENU1.LIST.ITEM1.LIST.SUBITEM12',
-                // link: '/pages/2',
-                parentId: 2010
-              },
-            ]
+          id: 2011,
+          label: 'MENUITEMS.MENU1.LIST.ITEM1.LIST.SUBITEM11',
+          parentId: 2010
+          },
+          {
+          id: 2012,
+          label: 'MENUITEMS.MENU1.LIST.ITEM1.LIST.SUBITEM12',
+          parentId: 2010
           },
         ]
+        },
+      ]
       },
       {
-          id: 4000,
-          label: 'MENUITEMS.LIMS.TEXT',
-          collapseid: 'Menu LIMS',
-          icon: 'ri-flask-fill', // Icone de Backer.
-          subItems: [
-            {
-              id: 4010,
-              label: 'MENUITEMS.LIMS.LIST.ITEM1.TEXT',
-              subItems: [
-                {
-                  id: 4011,
-                  label: 'MENUITEMS.LIMS.LIST.ITEM1.LIST.SUBITEM11',
-                  // link: '/pages/5',
-                  parentId: 4010
-                },
-                {
-                  id: 4012,
-                  label: 'MENUITEMS.LIMS.LIST.ITEM1.LIST.SUBITEM12',
-                  // link: '/pages/6',
-                  parentId: 4010
-                },
-              ]
-            },
-          ]
-        }
+      id: 4000,
+      label: 'MENUITEMS.LIMS.TEXT',
+      collapseid: 'Menu LIMS',
+      icon: 'ri-flask-fill',
+      // This link will call the home-lims page when clicked
+      subItems: [
+        {
+          id: 4001,
+          label: 'MENUITEMS.LIMS.LIST.HOME.TEXT',
+          parentId: 4010,
+          link: '/home-lims',
+        },
+        {
+        id: 4010,
+        label: 'MENUITEMS.LIMS.LIST.REGISTRATIONS.TEXT',
+        subItems: [
+          {
+          id: 4011,
+          label: 'MENUITEMS.LIMS.LIST.REGISTRATIONS.LIST.PROJECTS',
+          link: '/projects',
+          parentId: 4010
+          },
+          {
+          id: 4012,
+          label: 'MENUITEMS.LIMS.LIST.REGISTRATIONS.LIST.PROJECTS_TYPE',
+          link: '/projects-type',
+          parentId: 4010
+          },
+        ]
+        },
+      ]
+      }
     ];
 
     if (user.profile?.account?.id == 1){

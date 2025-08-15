@@ -22,11 +22,14 @@
     "LIMS": {
       "TEXT": "LIMS",
       "LIST": {
-        "ITEM1": {
-          "TEXT": "Item 1 LIMS",
+        "HOME": {
+          "TEXT": "Home"
+        },
+        "REGISTRATIONS": {
+          "TEXT": "Registrations",
           "LIST": {
-            "SUBITEM11": "Sub Item 11 LIMS",
-            "SUBITEM12": "Sub Item 12 LIMS"
+            "PROJECTS": "Projects",
+            "PROJECTS_TYPE": "Projects Type"
           }
         }
       }
