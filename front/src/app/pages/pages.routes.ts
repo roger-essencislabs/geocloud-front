@@ -26,6 +26,10 @@ export const pagesRoutes: Routes = [
     path: 'projects-type',
     loadComponent: () => import('./lims/registrations/projects-type/projects-type.component').then(m => m.ProjectsTypeComponent)
   }, 
+  {
+    path: 'Viewer',
+    loadComponent: () => import('./viewer/viewer.component') .then(m => m.ViewerComponent)
+  },
   // {
   //   path: 'accounts',
   //   component: AccountsComponent, canActivate: [AuthGuard]
