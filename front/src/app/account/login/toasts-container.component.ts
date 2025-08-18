@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component} from '@angular/core';
 
 import { ToastService } from './toast-service';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
@@ -28,7 +28,4 @@ import { CommonModule } from '@angular/common';
 })
 export class ToastsContainer {
   constructor(public toastService: ToastService) { }
-
-  isTemplate(toast: { textOrTpl: any; }) { 
-    return toast.textOrTpl instanceof TemplateRef; }
 }

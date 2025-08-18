@@ -4,6 +4,14 @@ import { Observable, map, take } from 'rxjs';
 import { GlobalComponent } from '../global-component';
 import { User } from '../models/User';
 import { DatePipe } from '@angular/common';
+import { catchError } from 'rxjs';
+
+// Login request interface
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
 
 @Injectable({providedIn: 'root'})
 export class CurrentUserService {
@@ -11,16 +19,28 @@ export class CurrentUserService {
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   public login(email: string, password: string): Observable<void>{
-    return this.http.get<User>(`${GlobalComponent.baseUrl}User/login?email=${email}&password=${password}`).pipe(
-      take(1),
-      map((response: User) => {
-        const user = response;
-        if (user) {
+    const body: LoginRequest = { email, password };
+
+  return this.http.post<User>(`${GlobalComponent.baseUrl}User/login`, body ).pipe(
+    take(1),
+    map((response: User) => {
+      this.setCurrentUser(response);
+         const user = response;
+         if (user) {
           this.setCurrentUser(user);
-        }
-      })
-    )
-  }
+         }
+    }),
+    catchError((error) => {
+      if (error == 'No user found')
+        throw 'Invalid email or password';
+      else
+      {
+        console.error('Server unavailable or network error:', error);
+        throw 'Server unavailable or network error [' + error + ']';
+      }
+    })
+  );
+}
 
   public setCurrentUser(user: User): void {
     console.log('setCurrentUser');
@@ -65,50 +85,85 @@ export class CurrentUserService {
   public makeMenu(user: User){
     var mm = [
       {
-        id: 1000,
-        label: 'MENUITEMS.SETTINGS.TEXT',
-        collapseid: 'Settings',
-        icon: 'ri-reactjs-fill', //'ri-layout-grid-line'
-        subItems: [
-          {
-            id: 1010,
-            label: 'Users',
-            link: '/users',
-          },
-          {
-            id: 1020,
-            label: 'Profiles',
-            link: '/profiles',
-          },
-        ]
+      id: 1000,
+      label: 'MENUITEMS.SETTINGS.TEXT',
+      collapseid: 'Settings',
+      icon: 'ri-reactjs-fill',
+      subItems: [
+        {
+        id: 1010,
+        label: 'MENUITEMS.SETTINGS.LIST.USERS',
+        link: '/users',
+        },
+        {
+        id: 1020,
+        label: 'MENUITEMS.SETTINGS.LIST.PROFILES',
+        link: '/profiles',
+        },
+        {
+        id: 1030,
+        label: 'MENUITEMS.SETTINGS.LIST.VIEWER',
+        link: '/Viewer',
+        }
+      ]
       },
       {
-        id: 2000,
-        label: 'MENUITEMS.MENU1.TEXT',
-        collapseid: 'Menu 1',
-        icon: 'ri-account-circle-line', //'ri-layout-grid-line'
+      id: 2000,
+      label: 'MENUITEMS.MENU1.TEXT',
+      collapseid: 'Menu 1',
+      icon: 'ri-account-circle-line',
+      subItems: [
+        {
+        id: 2010,
+        label: 'MENUITEMS.MENU1.LIST.ITEM1.TEXT',
         subItems: [
           {
-            id: 2010,
-            label: 'Item 1',
-            subItems: [
-              {
-                id: 2011,
-                label: 'Sub Item 11',
-                // link: '/pages/1',
-                parentId: 2010
-              },
-              {
-                id: 2012,
-                label: 'Sub Item 12',
-                // link: '/pages/2',
-                parentId: 2010
-              },
-            ]
+          id: 2011,
+          label: 'MENUITEMS.MENU1.LIST.ITEM1.LIST.SUBITEM11',
+          parentId: 2010
+          },
+          {
+          id: 2012,
+          label: 'MENUITEMS.MENU1.LIST.ITEM1.LIST.SUBITEM12',
+          parentId: 2010
           },
         ]
+        },
+      ]
       },
-      
+      {
+      id: 4000,
+      label: 'MENUITEMS.LIMS.TEXT',
+      collapseid: 'Menu LIMS',
+      icon: 'ri-flask-fill',
+      // This link will call the home-lims page when clicked
+      subItems: [
+        {
+          id: 4001,
+          label: 'MENUITEMS.LIMS.LIST.HOME.TEXT',
+          parentId: 4010,
+          link: '/home-lims',
+        },
+        {
+        id: 4010,
+        label: 'MENUITEMS.LIMS.LIST.REGISTRATIONS.TEXT',
+        subItems: [
+          {
+          id: 4011,
+          label: 'MENUITEMS.LIMS.LIST.REGISTRATIONS.LIST.PROJECTS',
+          link: '/projects',
+          parentId: 4010
+          },
+          {
+          id: 4012,
+          label: 'MENUITEMS.LIMS.LIST.REGISTRATIONS.LIST.PROJECTS_TYPE',
+          link: '/projects-type',
+          parentId: 4010
+          },
+        ]
+        },
+      ]
+      }
     ];
 
     if (user.profile?.account?.id == 1){
@@ -121,17 +176,18 @@ export class CurrentUserService {
           subItems: [
             {
               id: 3010,
-              label: 'Item Adm 1',
+              label: 'MENUITEMS.MENUADM.LIST.ITEMADM1.TEXT',
               subItems: [
                 {
                   id: 3011,
-                  label: 'Sub Item Adm 1',
+                  label: 'MENUITEMS.MENUADM.LIST.ITEMADM1.LIST.SUBITEMADM1',
                   // link: '/pages/5',
                   parentId: 3010
                 },
                 {
                   id: 3012,
-                  label: 'Sub Item  Adm 2',
+                  label: 'MENUITEMS.MENUADM.LIST.ITEMADM1.LIST.SUBITEMADM2',
+                  // link: '/pages/5',
                   // link: '/pages/6',
                   parentId: 3010
                 },

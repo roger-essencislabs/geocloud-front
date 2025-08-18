@@ -1,0 +1,21 @@
+#openseadragon-container {
+  width: 1000px;        /* ocupa toda a largura disponível */
+  max-width: 1200px;  /* limita tamanho máximo */
+  height: 600px;      /* altura fixa */
+  margin: 20px auto;  /* centralizado horizontalmente */
+  position: relative;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(136, 66, 66, 0.1);
+  overflow: hidden;
+}
+.a9s-annotationlayer {
+  pointer-events: none; /* evita que SVG bloqueie zoom/pan */
+}
+
+.a9s-annotationlayer svg {
+  pointer-events: auto; /* permite interagir com anotações */
+  stroke: #ff5722;      /* cor das linhas dos retângulos/polígonos */
+  stroke-width: 2px;
+  fill: rgba(255,87,34,0.2); /* preenchimento sem bloquear visual da imagem */
+}

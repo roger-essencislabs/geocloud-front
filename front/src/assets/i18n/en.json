@@ -4,7 +4,8 @@
       "TEXT": "Settings",
       "LIST": {
         "USERS": "Users",
-        "PROFILES": "Profiles"
+        "PROFILES": "Profiles",
+        "VIEWER": "viewer"
       }
     },
     "MENU1": {
@@ -15,6 +16,21 @@
           "LIST": {
             "SUBITEM11": "Sub Item 11",
             "SUBITEM12": "Sub Item 12"
+          }
+        }
+      }
+    },
+    "LIMS": {
+      "TEXT": "LIMS",
+      "LIST": {
+        "HOME": {
+          "TEXT": "Home"
+        },
+        "REGISTRATIONS": {
+          "TEXT": "Registrations",
+          "LIST": {
+            "PROJECTS": "Projects",
+            "PROJECTS_TYPE": "Projects Type"
           }
         }
       }

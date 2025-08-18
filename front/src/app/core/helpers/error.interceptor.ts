@@ -12,12 +12,19 @@ export class ErrorInterceptor implements HttpInterceptor {
                 private router: Router) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        let error = undefined
         return next.handle(request).pipe(catchError(err => {
             if (err.status === 401) {
                 this.currentUseService.logout();
                 this.router.navigate(['/auth/login']);
             }
-            const error = err.error.message || err.statusText;
+            // Handle 404 errors. Backend not found
+            if (err.status === 404) {
+                error = err.error;
+            }
+            else {
+                error = err.message;
+            }
             return throwError(error);
         }))
     }
