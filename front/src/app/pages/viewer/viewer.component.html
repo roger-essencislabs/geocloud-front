@@ -1,0 +1,12 @@
+<p>viewer works!</p>
+<div class="toolbar">
+  <button (click)="toggleDrawingMode('rectangle')">
+    {{ drawingMode && selectedTool === 'rectangle' ? 'Cancelar Quadrado' : 'Desenhar Quadrado' }}
+  </button>
+  <button (click)="toggleDrawingMode('polygon')">
+    {{ drawingMode && selectedTool === 'polygon' ? 'Cancelar Polígono' : 'Desenhar Polígono' }}
+  </button>
+  <button (click)="deleteSelected()">Excluir Selecionado</button>
+</div>
+
+<div id="openseadragon-container"></div>

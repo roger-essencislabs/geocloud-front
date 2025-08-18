@@ -4,7 +4,8 @@
       "TEXT": "Settings",
       "LIST": {
         "USERS": "Users",
-        "PROFILES": "Profiles"
+        "PROFILES": "Profiles",
+        "VIEWER": "viewer"
       }
     },
     "MENU1": {

@@ -100,6 +100,11 @@ export class CurrentUserService {
         label: 'MENUITEMS.SETTINGS.LIST.PROFILES',
         link: '/profiles',
         },
+        {
+        id: 1030,
+        label: 'MENUITEMS.SETTINGS.LIST.VIEWER',
+        link: '/Viewer',
+        }
       ]
       },
       {
