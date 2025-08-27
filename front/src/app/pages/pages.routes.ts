@@ -27,6 +27,10 @@ export const pagesRoutes: Routes = [
     loadComponent: () => import('./lims/registrations/projects-type/projects-type.component').then(m => m.ProjectsTypeComponent)
   }, 
   {
+    path: 'invoices',
+    loadComponent: () => import('./lims/registrations/invoices/invoices.component').then(m => m.InvoicesComponent)
+  }, 
+  {
     path: 'Viewer',
     loadComponent: () => import('./viewer/viewer.component') .then(m => m.ViewerComponent)
   },

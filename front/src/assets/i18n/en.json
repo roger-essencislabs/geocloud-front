@@ -30,6 +30,7 @@
           "TEXT": "Registrations",
           "LIST": {
             "PROJECTS": "Projects",
+            "INVOICES": "Invoices",
             "PROJECTS_TYPE": "Projects Type"
           }
         }

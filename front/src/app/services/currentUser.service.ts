@@ -160,6 +160,12 @@ export class CurrentUserService {
           link: '/projects-type',
           parentId: 4010
           },
+          {
+          id: 4013,
+          label: 'MENUITEMS.LIMS.LIST.REGISTRATIONS.LIST.INVOICES',
+          link: '/invoices',
+          parentId: 4010
+          },
         ]
         },
       ]

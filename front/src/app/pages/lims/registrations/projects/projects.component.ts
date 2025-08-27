@@ -1,33 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { InvoiceService } from 'src/app/services/invoice.service';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-projects',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
 
-export class ProjectsComponent implements OnInit{
-  public userService: InvoiceService 
-  invoices: any[] = [];
+export class ProjectsComponent {
 
-  constructor(userService: InvoiceService) {
-    this.userService = userService;
-  }
-
-  ngOnInit(): void {
-
-    this.userService?.GetInvoices().subscribe({
-      next: (invoices) => {
-        this.invoices = invoices;
-        console.log('Invoices:', invoices);
-      },
-      error: (error) => {
-        console.error('Error fetching invoices:', error);
-      }
-    });
-  }
-  
 }
