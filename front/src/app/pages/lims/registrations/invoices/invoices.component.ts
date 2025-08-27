@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { CommonModule } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 @Component({
   selector: 'app-invoices',
@@ -15,10 +17,12 @@ export class InvoicesComponent {
 
   constructor(userService: InvoiceService) {
     this.userService = userService;
+    registerLocaleData(localePt);
   }
 
   ngOnInit(): void {
 
+    
     this.userService?.GetInvoices().subscribe({
       next: (invoices) => {
         this.invoices = invoices;

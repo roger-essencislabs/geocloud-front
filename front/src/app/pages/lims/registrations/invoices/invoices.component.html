@@ -21,8 +21,8 @@
                                         <tr *ngFor="let invoice of invoices">
                                         <td class="fw-medium">{{ invoice.id }}</td>
                                         <td>{{ invoice.invoice }}</td>
-                                        <td>{{ invoice.amount }}</td>
-                                        <td>{{ invoice.date }}</td>
+                                        <td>{{ invoice.amount | currency: 'BRL' }}</td>
+                                        <td>{{ invoice.date | date:'fullDate' }}</td>
                                         <td>
                                             <i
                                             [ngClass]="{

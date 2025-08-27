@@ -18,6 +18,7 @@ import { CurrentUserService } from './services/currentUser.service';
 import { rootReducer } from './store';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { LOCALE_ID } from '@angular/core';
 
 
 export const appConfig: ApplicationConfig = {
@@ -47,7 +48,10 @@ export const appConfig: ApplicationConfig = {
         DatePipe,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
+
+
+         { provide: LOCALE_ID, useValue: 'pt-BR' }
     ]
 };
 
