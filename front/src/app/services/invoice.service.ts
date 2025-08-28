@@ -16,4 +16,8 @@ export class InvoiceService {
   public DeleteInvoice(id: number): Observable<void>{
     return this.http.delete<void>(`${GlobalComponent.baseUrl}Invoices/DeleteInvoices/${id}`).pipe(take(1));
   }
+
+  public UpdateInvoice(invoice: Invoice): Observable<any>{
+    return this.http.put(`${GlobalComponent.baseUrl}Invoices/UpdateInvoices`, invoice).pipe(take(1));
+  }
 }
