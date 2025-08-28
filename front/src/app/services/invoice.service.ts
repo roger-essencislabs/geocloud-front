@@ -13,5 +13,7 @@ export class InvoiceService {
     return this.http.get<Invoice[]>(`${GlobalComponent.baseUrl}Invoices/GetInvoices`).pipe(take(1));
   }
 
-
+  public DeleteInvoice(id: number): Observable<void>{
+    return this.http.delete<void>(`${GlobalComponent.baseUrl}Invoices/DeleteInvoices/${id}`).pipe(take(1));
+  }
 }

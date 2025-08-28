@@ -33,4 +33,18 @@ export class InvoicesComponent {
       }
     });
   }
+
+  deleteInvoice(id: number) {
+    if (confirm('Are you sure you want to delete this invoice?')) {
+      this.userService?.DeleteInvoice(id).subscribe({
+        next: () => {
+          this.invoices = this.invoices.filter(invoice => invoice.id !== id);
+          console.log('Invoice deleted:', id);
+        },
+        error: (error) => {
+          console.error('Error deleting invoice:', error);
+        }
+      });
+    }
+  }
 }
