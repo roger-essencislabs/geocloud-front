@@ -20,4 +20,7 @@ export class InvoiceService {
   public UpdateInvoice(invoice: Invoice): Observable<any>{
     return this.http.put(`${GlobalComponent.baseUrl}Invoices/UpdateInvoices`, invoice).pipe(take(1));
   }
+  public CreateInvoice(invoice: Invoice): Observable<any>{
+    return this.http.post(`${GlobalComponent.baseUrl}Invoices/AddInvoices`, invoice).pipe(take(1));
+  }
 }

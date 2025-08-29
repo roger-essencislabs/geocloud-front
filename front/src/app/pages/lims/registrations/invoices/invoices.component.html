@@ -6,6 +6,12 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="table-responsive mt-4 mt-xl-0">
+                                <!-- Coloque isso no topo da tabela -->
+                                <div class="d-flex justify-content-end mb-2">
+                                <button class="btn btn-outline-primary btn-sm" (click)="addInvoice()">
+                                    <i class="ri-add-circle-line"></i> Add Invoice
+                                </button>
+                                </div>
                                 <table class="table table-success table-striped table-nowrap align-middle mb-0">
                                     <thead>
                                         <tr>
@@ -74,16 +80,17 @@
                                             <td>
                                             <div class="hstack gap-2 flex-wrap">
                                                 <ng-container *ngIf="editingRowIndex === i; else actionButtons">
-                                                <button class="btn btn-sm btn-success" (click)="saveInvoice(i)">Salvar</button>
-                                                <button class="btn btn-sm btn-secondary" (click)="cancelEdit()">Cancelar</button>
+                                                <button class="btn btn-sm btn-success" (click)="saveInvoice(i)">Save</button>
+                                                <button class="btn btn-sm btn-secondary" (click)="cancelEdit()">Cancel</button>
                                                 </ng-container>
                                                 <ng-template #actionButtons>
-                                                <a href="javascript:void(0);" class="link-success fs-15" (click)="editRow(i)">
+                                                <a href="javascript:void(0);" class="link-success fs-15" (click)="editRow(i)" title="Edit Invoice">
                                                     <i class="ri-edit-2-line"></i>
                                                 </a>
-                                                <a href="javascript:void(0);" class="link-danger fs-15" (click)="deleteInvoice(invoice.id)">
+                                                <a href="javascript:void(0);" class="link-danger fs-15" (click)="deleteInvoice(invoice.id)" title="Remove Invoice">
                                                     <i class="ri-delete-bin-line"></i>
                                                 </a>
+                                                
                                                 </ng-template>
                                             </div>
                                             </td>
